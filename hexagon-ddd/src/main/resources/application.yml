@@ -1,0 +1,5 @@
+logging:
+  level:
+    org.springframework.web: ERROR
+    io.ebean.SQL: DEBUG
+    io.ebean.TXN: DEBUG
