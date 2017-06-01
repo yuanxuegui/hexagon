@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * @author Xuegui Yuan
  */
-public abstract class EbeanPagingAndSortingRepository<T, ID extends Serializable> extends EbeanCurdRepository<T, ID> implements PagingAndSortingRepository<T, ID> {
+public class EbeanPagingAndSortingRepository<T, ID extends Serializable> extends EbeanCurdRepository<T, ID> implements PagingAndSortingRepository<T, ID> {
 
     public EbeanPagingAndSortingRepository(EbeanServer ebeanServer, Class<T> entityType) {
         super(ebeanServer, entityType);
@@ -30,7 +30,7 @@ public abstract class EbeanPagingAndSortingRepository<T, ID extends Serializable
         return springDataPageFromEbeanPageList(currentDb().find(getEntityType()).setMaxRows(pageable.getPageSize()).setFirstRow(pageable.getOffset()).findPagedList());
     }
 
-    private OrderBy<T> ebeanOrderFromSpringDataSort(Sort sort) {
+    protected OrderBy<T> ebeanOrderFromSpringDataSort(Sort sort) {
         List<String> list = new ArrayList<>();
         while (sort.iterator().hasNext()) {
             Sort.Order so = sort.iterator().next();
@@ -39,7 +39,7 @@ public abstract class EbeanPagingAndSortingRepository<T, ID extends Serializable
        return new OrderBy<T>(StringUtils.collectionToCommaDelimitedString(list));
     }
 
-    private Page<T> springDataPageFromEbeanPageList(PagedList pagedList) {
+    protected Page<T> springDataPageFromEbeanPageList(PagedList pagedList) {
         return new PageImpl<T>(pagedList.getList(),
                 new PageRequest(pagedList.getPageIndex(), pagedList.getPageSize()),
                 pagedList.getTotalCount());

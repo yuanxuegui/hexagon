@@ -58,5 +58,9 @@ public class UserAggregateTest {
 
         Page<User> page = userRepository.findAll(new PageRequest(1, 10));
         Assert.assertEquals(10, page.getSize());
+
+        System.out.println("select username");
+        User userWithUsername = userRepository.findOne(1L, "username");
+        System.out.println(userWithUsername.getUsername());
     }
 }

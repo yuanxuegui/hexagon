@@ -10,7 +10,7 @@ import java.util.Collection;
 /**
  * @author Xuegui Yuan
  */
-public abstract class EbeanCurdRepository<T, ID extends Serializable> implements CrudRepository<T, ID>, DbChangeable {
+public class EbeanCurdRepository<T, ID extends Serializable> implements CrudRepository<T, ID>, DbChangeable {
     private EbeanServer ebeanServer;
     private Class<T> entityType;
 
