@@ -27,7 +27,7 @@ public class EbeanConfiguration {
 //        config.setExternalTransactionManager(new SpringAwareJdbcTransactionManager());
 
         config.loadFromProperties();
-        config.setName("currentDb");
+        config.setName("db");
         config.setDefaultServer(true);
         config.setAutoCommitMode(false);
         config.setExpressionNativeIlike(true);

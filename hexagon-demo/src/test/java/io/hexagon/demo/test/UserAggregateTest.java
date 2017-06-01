@@ -11,6 +11,8 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 /**
@@ -45,5 +47,16 @@ public class UserAggregateTest {
 
         userRepository.db(secondEbeanServer);
         User userInSecondDb = userRepository.findOne(userInDb2.getId());
+
+        for (int i = 0; i < 10; i++) {
+            User u  = new User("yuanxuegui", "123456");
+            Person p = new Person();
+            p.setName("test");
+            u.setPerson(p);
+            userRepository.save(u);
+        }
+
+        Page<User> page = userRepository.findAll(new PageRequest(1, 10));
+        Assert.assertEquals(10, page.getSize());
     }
 }
