@@ -2,6 +2,8 @@ package io.hexagon.demo.domain.model;
 
 import io.hexagon.ddd.domain.model.AbstractEntity;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 
@@ -10,7 +12,8 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "person")
-@Data
+@Getter
+@Setter
 public class Person extends AbstractEntity {
     private String email;
     private String name;

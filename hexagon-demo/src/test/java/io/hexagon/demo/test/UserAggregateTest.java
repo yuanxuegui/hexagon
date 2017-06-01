@@ -1,5 +1,6 @@
 package io.hexagon.demo.test;
 
+import io.ebean.EbeanServer;
 import io.hexagon.demo.DemoApplication;
 import io.hexagon.demo.domain.model.Person;
 import io.hexagon.demo.domain.model.User;
@@ -8,6 +9,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -19,6 +21,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class UserAggregateTest {
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    @Qualifier("secondEbeanServer")
+    EbeanServer secondEbeanServer;
 
     @Test
     public void testChangePersonName() {
@@ -36,5 +42,8 @@ public class UserAggregateTest {
         userRepository.save(userInDb);
         User userInDb2 = userRepository.findOne(user.getId());
         Assert.assertEquals("Xuegui Yuan", userInDb2.getPerson().getName());
+
+        userRepository.db(secondEbeanServer);
+        User userInSecondDb = userRepository.findOne(userInDb2.getId());
     }
 }
